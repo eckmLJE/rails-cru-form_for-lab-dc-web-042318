@@ -12,7 +12,7 @@ class ArtistsController < ApplicationController
     end
 
     def create
-        @artist = Artist.create(name: params[:artist][:name], bio: params[:artist][:bio])
+        @artist = Artist.create(artist_params)
         redirect_to artist_path(@artist)
     end
 
@@ -22,11 +22,17 @@ class ArtistsController < ApplicationController
     
     def update
         @artist = Artist.find(params[:id])
-        @artist.update(name: params[:artist][:name], bio: params[:artist][:bio])
+        @artist.update(artist_params)
         redirect_to artist_path(@artist)
     end
 
     def destroy
     end
+
+    private
+
+        def artist_params
+            params.require(:artist).permit(:name, :bio)
+        end
 
 end
